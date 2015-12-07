@@ -2,31 +2,34 @@ import React from "react";
 import List from "./List";
 import Form from "./Form";
 
-import API from "../API";
+import LinkActions from "../actions/LinkActions";
+
+import LinkStore from "../stores/LinkStore";
+
+let _getAppState = () => {
+  return { bookmarks: LinkStore.getAll() }
+}
 
 // Controller-View Component
 class AppController extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { bookmarks: [] };
+    this.state = _getAppState();
+    this._onChange = this._onChange.bind(this);
   }
   insertBookmark(newBookmark) {
-    // API.saveBookmark(newBookmark)
-    //    .done(data => {
-    //          this.setState({
-    //            bookmarks: this.state.bookmarks.concat(data)
-    //     });
-    // });
-
-    // Save this new bookmark
+    // LinkActions.saveNewBookmark(newBookmark);
   }
   componentDidMount() {
-    // API.getAllBookmarks()
-    //    .done(data => {
-    //     this.setState({ bookmarks: data.links });
-    //   });
-
-    // Bring me all the links data
+    LinkActions.getAllBookmarks();
+    LinkStore.startListening(this._onChange);
+  }
+  componentWillUnmount() {
+    LinkStore.stopListening(this._onChange);
+  }
+  _onChange() {
+    console.log("5. The store has emitted a change event")
+    this.setState(_getAppState());
   }
   render() {
     return (
