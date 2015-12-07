@@ -1,1 +1,6 @@
-console.log(`JSPM is ${'cool'}`);
+import React from "react";
+import ReactDOM from "react-dom";
+
+import AppController from "./components/AppController";
+
+ReactDOM.render(<AppController />, document.getElementById("react"));
