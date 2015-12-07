@@ -1,6 +1,7 @@
 import React from "react";
 import $ from "jquery";
 import List from "./List";
+import Form from "./Form";
 
 // Controller-View Component
 class AppController extends React.Component {
@@ -27,6 +28,7 @@ class AppController extends React.Component {
       <div className="app">
         <h2>Bookmarks!</h2>
         <List bookmarks={this.state.bookmarks} />
+        <Form />
       </div>
     );
   }
