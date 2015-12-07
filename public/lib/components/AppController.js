@@ -9,6 +9,14 @@ class AppController extends React.Component {
     super(props);
     this.state = { bookmarks: [] };
   }
+  insertBookmark(newBookmark) {
+    $.post("/api/links", newBookmark)
+      .success(data => {
+        this.setState({
+          bookmarks: this.state.bookmarks.concat(data)
+        });
+      });
+  }
   componentDidMount() {
     console.log("did mount");
     $.get("/api/links")
@@ -28,7 +36,7 @@ class AppController extends React.Component {
       <div className="app">
         <h2>Bookmarks!</h2>
         <List bookmarks={this.state.bookmarks} />
-        <Form />
+        <Form addBookmark={this.insertBookmark.bind(this)} />
       </div>
     );
   }
