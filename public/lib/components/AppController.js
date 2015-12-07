@@ -1,7 +1,8 @@
 import React from "react";
-import $ from "jquery";
 import List from "./List";
 import Form from "./Form";
+
+import API from "../API";
 
 // Controller-View Component
 class AppController extends React.Component {
@@ -10,28 +11,20 @@ class AppController extends React.Component {
     this.state = { bookmarks: [] };
   }
   insertBookmark(newBookmark) {
-    $.post("/api/links", newBookmark)
-      .success(data => {
-        this.setState({
-          bookmarks: this.state.bookmarks.concat(data)
+    API.saveBookmark(newBookmark)
+       .done(data => {
+             this.setState({
+               bookmarks: this.state.bookmarks.concat(data)
         });
-      });
+    });
   }
   componentDidMount() {
-    console.log("did mount");
-    $.get("/api/links")
-      .success(data => {
+    API.getAllBookmarks()
+       .done(data => {
         this.setState({ bookmarks: data.links });
       });
   }
-  componentWillMount() {
-    console.log("will mount");
-  }
-  componentWillUpdate() {
-    console.log("will update");
-  }
   render() {
-    console.log("render");
     return (
       <div className="app">
         <h2>Bookmarks!</h2>
