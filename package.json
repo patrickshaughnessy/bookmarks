@@ -22,6 +22,7 @@
       "baseURL": "public"
     },
     "dependencies": {
+      "jquery": "github:components/jquery@^2.1.4",
       "react": "npm:react@^0.14.3",
       "react-dom": "npm:react-dom@^0.14.3"
     },
