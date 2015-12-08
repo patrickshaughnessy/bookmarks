@@ -23,7 +23,7 @@ var memLinks = [];
 router.get('/api/links', function(req, res, next) {
   Bookmark.find({}, function(error, links){
     res.json({ links: filterLikes(links, req.ip) });
-  })
+  }).lean();
 });
 
 router.post('/api/links', function(req, res, next) {
@@ -38,7 +38,7 @@ router.post('/api/links/delete', function(req, res, next){
   Bookmark.findByIdAndRemove(id, function(err){
     Bookmark.find({}, function(err, links){
       res.json(filterLikes(links, req.ip));
-    });
+    }).lean();
   });
 });
 
