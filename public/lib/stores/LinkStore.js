@@ -23,6 +23,11 @@ class LinkStore extends EventEmitter {
             _links.push(action.link);
             this.emit("CHANGE");
             break;
+        case ActionTypes.DELETE_LINK:
+            _links = action.links;
+            console.log('inside store', _links);
+            this.emit("CHANGE");
+            break;
         default:
           // do nothing
       }

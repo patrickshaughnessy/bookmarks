@@ -10,6 +10,9 @@ let API = {
   fetchAllBookmarks() {
     console.log("2. In the API.fetchAllBookmarks()")
     get("/api/links").done(data => ServerActions.receiveLinks(data.links));
+  },
+  deleteBookmark(bookmark){
+    post('/api/links/delete', bookmark).done(links => ServerActions.deleteLink(links));
   }
 };
 

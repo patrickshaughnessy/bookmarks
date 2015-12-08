@@ -31,12 +31,10 @@ class AppController extends React.Component {
   render() {
     return (
       <div className="app">
-        <h2>Bookmarks!</h2>
-        <List bookmarks={this.state.bookmarks} />
-        <div>
-          Total: {this.state.bookmarks.length}
-        </div>
+        <h1>Bookmarks!</h1>
+        <h3>Total: {this.state.bookmarks.length}</h3>
         <Form />
+        <List bookmarks={this.state.bookmarks} />
       </div>
     );
   }
