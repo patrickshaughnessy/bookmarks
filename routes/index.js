@@ -34,9 +34,7 @@ router.post('/api/links', function(req, res, next) {
 
 router.post('/api/links/delete', function(req, res, next){
   var id = req.body._id;
-  // links = links.filter(link => {
-  //   return link.id.toString() !== id;
-  // });
+
   Bookmark.findByIdAndRemove(id, function(err){
     Bookmark.find({}, function(err, links){
       res.json(filterLikes(links, req.ip));
@@ -49,9 +47,7 @@ router.post('/api/links/like', function(req, res, next){
   var id = req.body._id;
 
   Bookmark.findById(id, function(err, link){
-    console.log(typeof link.likedBy[0], typeof ip);
     var idx = link.likedBy.length ? link.likedBy.indexOf(ip) : -1;
-    console.log(idx);
     if (idx >= 0){
       link.likedBy.splice(idx, 1);
     } else {
@@ -63,29 +59,6 @@ router.post('/api/links/like', function(req, res, next){
       }).lean()
     });
   })
-
-  //
-  //
-  // links = links.map(link => {
-  //   if (link.id.toString() === id){
-  //     if (link.liked){
-  //       link.liked = {
-  //         liked: link.liked.liked ? !link.liked.liked : true,
-  //         ip: ip
-  //       }
-  //     } else {
-  //       link.liked = {
-  //         liked: true,
-  //         ip: ip
-  //       }
-  //     }
-  //
-  //     Data.find({bookmark})
-  //
-  //   }
-  //   return link;
-  // });
-  // res.json(links);
 })
 
 module.exports = router;
