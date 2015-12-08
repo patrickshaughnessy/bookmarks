@@ -26,6 +26,17 @@ router.post('/api/links/delete', function(req, res, next){
   });
   console.log(links);
   res.json(links);
+});
+
+router.post('/api/links/like', function(req, res, next){
+  var id = req.body.id;
+  links = links.map(link => {
+    if (link.id.toString() === id){
+      link.liked = link.liked ? !link.liked : true;
+    }
+    return link;
+  });
+  res.json(links);
 })
 
 module.exports = router;

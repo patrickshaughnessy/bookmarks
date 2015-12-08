@@ -8,15 +8,21 @@ class Link extends React.Component {
     LinkActions.deleteBookmark(bookmark);
   }
 
-  render() {
-    let {title, url, safe, id} = this.props.link;
+  toggleLike(bookmark, e){
+    e.preventDefault();
+    LinkActions.toggleLike(bookmark);
+  }
 
+  render() {
+    let {title, url, safe, liked} = this.props.link;
+    console.log('inside link', liked)
     return (
       <li className="link">
         <a href={url} style={ {color: (safe ? 'green' : 'black')} }>
           {title}
         </a>
         &nbsp; &nbsp; <i onClick={this.deleteBookmark.bind(this, this.props.link)} className="fa fa-trash-o"></i>
+        &nbsp; &nbsp; <i onClick={this.toggleLike.bind(this, this.props.link)} className={liked ? 'fa fa-heart' : 'fa fa-heart-o'} ></i>
       </li>
     );
   }

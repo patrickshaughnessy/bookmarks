@@ -9,6 +9,9 @@ let LinkActions = {
   },
   deleteBookmark(bookmark){
     API.deleteBookmark(bookmark);
+  },
+  toggleLike(bookmark){
+    API.toggleLike(bookmark);
   }
 };
 
