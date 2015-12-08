@@ -2,11 +2,13 @@ import React from "react";
 
 class Link extends React.Component {
   render() {
-    let {title, url} = this.props.link;
+    let {title, url, safe} = this.props.link;
 
     return (
       <div className="link">
-        <a href={url}>{title}</a>
+        <a href={url}
+           style={ { color: (safe ? 'green' : 'black') } }
+          >{title}</a>
       </div>
     );
   }
