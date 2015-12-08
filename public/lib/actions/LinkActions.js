@@ -1,8 +1,10 @@
 import API from "../API";
 
 let LinkActions = {
+  saveBookmark(newBookmark) {
+    API.saveBookmark(newBookmark);
+  },
   getAllBookmarks() {
-    console.log("1. In LinkActions.getAllBookmarks()");
     API.fetchAllBookmarks();
   }
 };

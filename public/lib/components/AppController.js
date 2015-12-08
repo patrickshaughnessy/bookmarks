@@ -17,9 +17,6 @@ class AppController extends React.Component {
     this.state = _getAppState();
     this._onChange = this._onChange.bind(this);
   }
-  insertBookmark(newBookmark) {
-    // LinkActions.saveNewBookmark(newBookmark);
-  }
   componentDidMount() {
     LinkActions.getAllBookmarks();
     LinkStore.startListening(this._onChange);
@@ -36,7 +33,7 @@ class AppController extends React.Component {
       <div className="app">
         <h2>Bookmarks!</h2>
         <List bookmarks={this.state.bookmarks} />
-        <Form addBookmark={this.insertBookmark.bind(this)} />
+        <Form />
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import React from "react";
+import LinkActions from "../actions/LinkActions";
 
 class Form extends React.Component {
   constructor(props) {
@@ -13,8 +14,7 @@ class Form extends React.Component {
     let newBookmark = { title: this.state.titleValue,
                         url: this.state.urlValue };
 
-    // invoke the insertBookmark(newBookmark);
-    this.props.addBookmark(newBookmark);
+    LinkActions.saveBookmark(newBookmark);
     this.setState({titleValue: '', urlValue: ''});
   }
   render() {

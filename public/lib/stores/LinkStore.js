@@ -17,6 +17,12 @@ class LinkStore extends EventEmitter {
           _links = action.links;
           this.emit("CHANGE");
           break;
+        case ActionTypes.RECEIVE_ONE_LINK:
+            console.log("We received news about the new link", action);
+            // account for the new data;
+            _links.push(action.link);
+            this.emit("CHANGE");
+            break;
         default:
           // do nothing
       }
