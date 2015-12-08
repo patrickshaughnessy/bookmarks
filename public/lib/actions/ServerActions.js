@@ -16,12 +16,6 @@ let ServerActions = {
       actionType: ActionTypes.RECEIVE_ONE_LINK,
       link
     });
-  },
-  deleteLink(links) {
-    AppDispatcher.dispatch({
-      actionType: ActionTypes.DELETE_LINK,
-      links
-    })
   }
 };
 

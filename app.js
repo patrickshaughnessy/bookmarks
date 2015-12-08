@@ -5,6 +5,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var mongoURL = process.env.MONGOLAB_URI || 'mongodb://localhost/fluxbookmarks';
+var mongoose = require('mongoose');
+mongoose.connect(mongoURL, function(err){
+  console.log('Connected to MongoDB: ', mongoURL);
+});
+
 var routes = require('./routes/index');
 
 var app = express();

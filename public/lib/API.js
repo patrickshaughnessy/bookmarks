@@ -12,7 +12,7 @@ let API = {
     get("/api/links").done(data => ServerActions.receiveLinks(data.links));
   },
   deleteBookmark(bookmark){
-    post('/api/links/delete', bookmark).done(links => ServerActions.deleteLink(links));
+    post('/api/links/delete', bookmark).done(links => ServerActions.receiveLinks(links));
   },
   toggleLike(bookmark){
     post('/api/links/like', bookmark).done(links => ServerActions.receiveLinks(links));

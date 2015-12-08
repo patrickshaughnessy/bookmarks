@@ -1,42 +1,91 @@
 var express = require('express');
 var router = express.Router();
 
+var Bookmark = require('../models/bookmark')
+
+function filterLikes(links, ip){
+  return links.map(link => {
+    if (link.likedBy.indexOf(ip) !== -1){
+      link.liked = true;
+    } else {
+      link.liked = false;
+    }
+    return link;
+  })
+}
+
 router.get('/express', function(req, res, next) {
   res.render('index', { title: 'React' });
 });
 
-var links = [];
+var memLinks = [];
 
 router.get('/api/links', function(req, res, next) {
-   res.json({ links: links });
+  Bookmark.find({}, function(error, links){
+    res.json({ links: filterLikes(links, req.ip) });
+  })
 });
 
 router.post('/api/links', function(req, res, next) {
-   var newLink = req.body;
-   newLink.id = Date.now();
-   links.push(newLink);
-   res.json(newLink);
+  Bookmark.create(req.body, function(err, savedLink){
+     res.json(savedLink);
+  })
 });
 
 router.post('/api/links/delete', function(req, res, next){
-  var id = req.body.id;
-  console.log(id, req.body);
-  links = links.filter(link => {
-    return link.id.toString() !== id;
+  var id = req.body._id;
+  // links = links.filter(link => {
+  //   return link.id.toString() !== id;
+  // });
+  Bookmark.findByIdAndRemove(id, function(err){
+    Bookmark.find({}, function(err, links){
+      res.json(filterLikes(links, req.ip));
+    });
   });
-  console.log(links);
-  res.json(links);
 });
 
 router.post('/api/links/like', function(req, res, next){
-  var id = req.body.id;
-  links = links.map(link => {
-    if (link.id.toString() === id){
-      link.liked = link.liked ? !link.liked : true;
+  var ip = req.ip;
+  var id = req.body._id;
+
+  Bookmark.findById(id, function(err, link){
+    console.log(typeof link.likedBy[0], typeof ip);
+    var idx = link.likedBy.length ? link.likedBy.indexOf(ip) : -1;
+    console.log(idx);
+    if (idx >= 0){
+      link.likedBy.splice(idx, 1);
+    } else {
+      link.likedBy.push(ip);
     }
-    return link;
-  });
-  res.json(links);
+    link.save(function(err){
+      Bookmark.find({}, function(err, links){
+        res.json(filterLikes(links, ip));
+      }).lean()
+    });
+  })
+
+  //
+  //
+  // links = links.map(link => {
+  //   if (link.id.toString() === id){
+  //     if (link.liked){
+  //       link.liked = {
+  //         liked: link.liked.liked ? !link.liked.liked : true,
+  //         ip: ip
+  //       }
+  //     } else {
+  //       link.liked = {
+  //         liked: true,
+  //         ip: ip
+  //       }
+  //     }
+  //
+  //     Data.find({bookmark})
+  //
+  //   }
+  //   return link;
+  // });
+  // res.json(links);
 })
 
 module.exports = router;
